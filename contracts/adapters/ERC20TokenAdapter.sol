@@ -77,7 +77,7 @@ contract ERC20TokenAdapter is TokenAdapter {
     }
 
     /**
-     * @dev Internal function to get non-ERC20 tokens' names.
+     * @dev Internal function to get non-ERC20 token name.
      */
     function getName(address token) internal view returns (string memory) {
         (, bytes memory returnData) = token.staticcall(
@@ -92,7 +92,7 @@ contract ERC20TokenAdapter is TokenAdapter {
     }
 
     /**
-     * @dev Internal function to get non-ERC20 tokens' symbols.
+     * @dev Internal function to get non-ERC20 token symbol.
      */
     function getSymbol(address token) internal view returns (string memory) {
         (, bytes memory returnData) = token.staticcall(
