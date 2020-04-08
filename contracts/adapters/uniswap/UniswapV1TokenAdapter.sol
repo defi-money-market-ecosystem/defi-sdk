@@ -33,9 +33,9 @@ interface CToken {
 
 
 /**
- * @dev Factory contract interface.
- * Only the functions required for UniswapAdapter contract are added.
- * The Factory contract is available here
+ * @dev Exchange contract interface.
+ * Only the functions required for UniswapV1TokenAdapter contract are added.
+ * The Exchange contract is available here
  * github.com/Uniswap/contracts-vyper/blob/master/contracts/uniswap_exchange.vy.
  */
 interface Exchange {
@@ -47,7 +47,7 @@ interface Exchange {
 
 /**
  * @dev Factory contract interface.
- * Only the functions required for UniswapAdapter contract are added.
+ * Only the functions required for UniswapV1TokenAdapter contract are added.
  * The Factory contract is available here
  * github.com/Uniswap/contracts-vyper/blob/master/contracts/uniswap_factory.vy.
  */
