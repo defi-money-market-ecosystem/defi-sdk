@@ -20,25 +20,25 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@babel/core": "7.8.6",
-    "@babel/preset-env": "7.8.6",
-    "@babel/register": "7.8.6",
-    "@truffle/hdwallet-provider": "1.0.32",
+    "@babel/core": "7.9.0",
+    "@babel/preset-env": "7.9.0",
+    "@babel/register": "7.9.0",
+    "@truffle/hdwallet-provider": "1.0.34",
     "core-js": "3.6.4",
     "dotenv": "8.2.0",
-    "regenerator-runtime": "0.13.3",
-    "truffle": "5.1.18",
-    "truffle-plugin-verify": "0.3.9"
+    "regenerator-runtime": "0.13.5",
+    "truffle": "5.1.20",
+    "truffle-plugin-verify": "0.3.10"
   },
   "devDependencies": {
     "@codechecks/client": "0.1.10",
     "eslint": "6.8.0",
-    "eslint-config-airbnb-base": "14.0.0",
-    "eslint-plugin-import": "2.20.1",
-    "eth-gas-reporter": "0.2.15",
+    "eslint-config-airbnb-base": "14.1.0",
+    "eslint-plugin-import": "2.20.2",
+    "eth-gas-reporter": "0.2.16",
     "ethlint": "1.2.5",
     "ganache-cli": "6.9.1",
-    "solhint": "3.0.0-rc.6",
-    "solidity-coverage": "0.7.2"
+    "solhint": "3.0.0-rc.7",
+    "solidity-coverage": "0.7.4"
   }
 }
