@@ -82,7 +82,7 @@ contract UniswapV1TokenAdapter is TokenAdapter {
     }
 
     /**
-     * @return Array of Component structs with underlying tokens rates for the given asset.
+     * @return Array of Component structs with underlying tokens rates for the given token.
      * @dev Implementation of TokenAdapter interface function.
      */
     function getComponents(address token) external view override returns (Component[] memory) {
@@ -97,7 +97,7 @@ contract UniswapV1TokenAdapter is TokenAdapter {
             rate: token.balance * 1e18 / totalSupply
         });
 
-        try CToken(underlyingToken).isCToken() returns (bool) {
+        try CToken(underlyingToken).isCToken{gas: 2000}() returns (bool) {
             underlyingTokenType = "CToken";
         } catch {
             underlyingTokenType = "ERC20";

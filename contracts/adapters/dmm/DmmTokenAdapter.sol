@@ -22,24 +22,34 @@ import { TokenAdapter } from "../TokenAdapter.sol";
 
 
 /**
- * @dev BasePool contract interface.
- * Only the functions required for PoolTogetherTokenAdapter contract are added.
- * The BasePool contract is available here
- * github.com/pooltogether/pooltogether-contracts/blob/master/contracts/BasePool.sol.
+ * @dev IDmmToken contract interface.
+ * Only the functions required for DmmTokenAdapter contract are added.
+ * The IDmmToken contract is available here
+ * github.com/defi-money-market-ecosystem/protocol/blob/master/contracts/interfaces/IDmmController.sol.
  */
-interface BasePool {
-    function token() external view returns (address);
+interface IDmmController {
+    function getUnderlyingTokenForDmm(address dmmToken) external view returns (address);
+    function getExchangeRate(address dmmToken) external view returns (uint);
 }
 
 
 /**
- * @title Token adapter for PoolTogether pools.
- * @dev Implementation of TokenAdapter interface.
- * @author Igor Sobolev <sobolev@zerion.io>
+ * @dev IDmmToken contract interface.
+ * Only the functions required for DmmTokenAdapter contract are added.
+ * The IDmmToken contract is available here
+ * github.com/defi-money-market-ecosystem/protocol/blob/master/contracts/interfaces/IDmmToken.sol.
  */
-contract PoolTogetherTokenAdapter is TokenAdapter {
+interface IDmmToken {
+    function controller() external view returns (IDmmController);
+}
 
-    address internal constant SAI_POOL = 0xb7896fce748396EcFC240F5a0d3Cc92ca42D7d84;
+
+/**
+ * @title Token adapter for IDmmTokens.
+ * @dev Implementation of TokenAdapter interface.
+ * @author Corey Caplan <corey@dolomite.io>
+ */
+contract DmmTokenAdapter is TokenAdapter {
 
     /**
      * @return TokenMetadata struct with ERC20-style token info.
@@ -48,34 +58,23 @@ contract PoolTogetherTokenAdapter is TokenAdapter {
     function getMetadata(address token) external view override returns (TokenMetadata memory) {
         return TokenMetadata({
             token: token,
-            name: getPoolName(token),
-            symbol: "PLT",
-            decimals: ERC20(BasePool(token).token()).decimals()
+            name: ERC20(token).name(),
+            symbol: ERC20(token).symbol(),
+            decimals: ERC20(token).decimals()
         });
     }
 
     /**
-     * @return Array of Component structs with underlying tokens rates for the given token.
+     * @return Array of Component structs with underlying tokens rates for the given asset.
      * @dev Implementation of TokenAdapter interface function.
      */
     function getComponents(address token) external view override returns (Component[] memory) {
         Component[] memory underlyingTokens = new Component[](1);
-
         underlyingTokens[0] = Component({
-            token: BasePool(token).token(),
+            token: IDmmToken(token).controller().getUnderlyingTokenForDmm(token),
             tokenType: "ERC20",
-            rate: 1e18
+            rate: IDmmToken(token).controller().getExchangeRate(token)
         });
-
         return underlyingTokens;
-    }
-
-    function getPoolName(address token) internal view returns (string memory) {
-        if (token == SAI_POOL) {
-            return "SAI pool";
-        } else {
-            address underlying = BasePool(token).token();
-            return string(abi.encodePacked(ERC20(underlying).symbol(), " pool"));
-        }
     }
 }
